@@ -1,0 +1,203 @@
+return {
+  "neovim/nvim-lspconfig",
+  dependencies = {
+    -- Mason for managing LSP servers
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "folke/neodev.nvim",
+  },
+  config = function()
+    require("neodev").setup({
+        library = {
+            enabled = true,
+            runtime = true,
+            types = true,
+            plugins = true,
+            },
+        })
+
+    require("mason").setup({
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        }
+      }
+    })
+
+    -- Define the LSP servers you want installed
+    local servers = {
+      -- Python
+      pylsp = {
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = { enabled = false }, -- Disable if too noisy
+              mccabe = { enabled = false },
+              pyflakes = { enabled = true },
+              rope_completion = { enabled = true },
+              rope_autoimport = { enabled = true },
+            }
+          }
+        }
+      },
+
+      -- C++
+      clangd = {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--suggest-missing-includes",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=google",
+        },
+        init_options = {
+          usePlaceholders = true,
+          completeUnimported = true,
+          clangdFileStatus = true,
+        },
+        root_dir = function(fname)
+          local lspconfig = require("lspconfig")
+          -- Look for compile_commands.json or CMakeLists.txt
+          return lspconfig.util.root_pattern(
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".clangd",
+            ".clang-tidy",
+            ".clang-format",
+            "CMakeLists.txt",
+            "package.xml"
+          )(fname) or lspconfig.util.find_git_ancestor(fname)
+        end,
+      },
+      -- YAML
+      yamlls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "/*.k8s.yaml",
+            },
+            -- Add ROS2 specific schemas if needed
+            format = {
+              enable = true,
+            },
+            validate = true,
+            completion = true,
+          }
+        }
+      },
+      -- CMake
+      cmake = {},
+      -- Lua
+      lua_ls = {
+        settings = {
+          Lua = {
+            completion = {
+              callSnippet = "Replace"
+            },
+            diagnostics = {
+              -- Tell the language server which global variables to recognize
+              globals = {
+                "vim", -- Main vim global
+                "describe", "it", "before_each", "after_each" -- For testing if you use busted
+              },
+            },
+            workspace = {
+              -- Make the server aware of Neovim runtime files
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false, -- Disable third-party checking
+            },
+            telemetry = {
+              enable = false, -- Don't send telemetry data
+            },
+            format = {
+              enable = false, -- Use stylua or other formatter instead
+            },
+          }
+        }
+      },
+
+    }
+
+    -- Setup mason-lspconfig
+    require("mason-lspconfig").setup({
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = true,
+    })
+
+    -- LSP keymaps function
+    local on_attach = function(client, bufnr)
+      local map = function(mode, lhs, rhs, desc)
+        vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+      end
+
+      -- Essential LSP keymaps
+      map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+      map("n", "gr", vim.lsp.buf.references, "Go to References")
+      map("n", "gI", vim.lsp.buf.implementation, "Go to Implementation")
+      map("n", "gy", vim.lsp.buf.type_definition, "Go to Type Definition")
+      map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+
+      -- Hover and help
+      map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+      map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+      map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
+
+      -- Code actions and refactoring
+      map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
+      map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
+
+      -- Diagnostics
+      map("n", "[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
+      map("n", "]d", vim.diagnostic.goto_next, "Next Diagnostic")
+      map("n", "<leader>e", vim.diagnostic.open_float, "Show Line Diagnostics")
+      map("n", "<leader>q", vim.diagnostic.setloclist, "Open Diagnostic List")
+
+      -- Workspace folders (useful for C++ projects)
+      map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add Workspace Folder")
+      map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove Workspace Folder")
+      map("n", "<leader>wl", function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, "List Workspace Folders")
+    end
+
+    -- Setup each LSP server
+    local lspconfig = require("lspconfig")
+    for server_name, server_config in pairs(servers) do
+      server_config.on_attach = on_attach
+      server_config.capabilities = vim.lsp.protocol.make_client_capabilities()
+
+      lspconfig[server_name].setup(server_config)
+    end
+
+    -- Configure diagnostics display
+    vim.diagnostic.config({
+      virtual_text = {
+        prefix = "●",
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+      severity_sort = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
+    })
+
+    -- Diagnostic signs
+    local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+    for type, icon in pairs(signs) do
+      local hl = "DiagnosticSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
+  end,
+}

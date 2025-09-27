@@ -1,4 +1,3 @@
--- Onur's Neovim Config 1
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -20,7 +19,6 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
--- Setup lazy.nvim
 local plugins_path = vim.fn.stdpath("config") .. "/lua/plugins"
 local plugins_exist = vim.fn.isdirectory(plugins_path) == 1 and #vim.fn.glob(plugins_path .. "/*.lua", false, true) > 0
 
@@ -29,7 +27,6 @@ if plugins_exist then
     change_detection = { notify = false },
   })
 else
-  -- Just setup lazy without any plugins for now
   require("lazy").setup({}, {
     change_detection = { notify = false },
   })

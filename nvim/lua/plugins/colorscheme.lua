@@ -1,5 +1,4 @@
 return {
-  -- Catppuccin colorscheme - excellent for readability
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -57,32 +56,32 @@ return {
           return {
             -- Better comment visibility
             Comment = { fg = colors.overlay1, style = { "italic" } },
-            
+
             -- Enhanced string highlighting
             String = { fg = colors.green, style = {} },
-            
+
             -- Better function visibility
             Function = { fg = colors.blue, style = { "bold" } },
             ["@function"] = { fg = colors.blue, style = { "bold" } },
             ["@function.method"] = { fg = colors.blue, style = { "bold" } },
             ["@function.call"] = { fg = colors.blue, style = {} },
-            
+
             -- Improved keyword highlighting
             Keyword = { fg = colors.mauve, style = { "italic" } },
             ["@keyword"] = { fg = colors.mauve, style = { "italic" } },
             ["@keyword.function"] = { fg = colors.mauve, style = { "italic" } },
             ["@keyword.return"] = { fg = colors.mauve, style = { "italic" } },
-            
+
             -- Better variable highlighting
             ["@variable"] = { fg = colors.text, style = {} },
             ["@variable.builtin"] = { fg = colors.red, style = {} },
             ["@parameter"] = { fg = colors.maroon, style = {} },
-            
+
             -- Type highlighting
             Type = { fg = colors.yellow, style = { "bold" } },
             ["@type"] = { fg = colors.yellow, style = { "bold" } },
             ["@type.builtin"] = { fg = colors.yellow, style = { "bold" } },
-            
+
             -- Constants and numbers
             Constant = { fg = colors.peach, style = {} },
             ["@constant"] = { fg = colors.peach, style = {} },
@@ -91,32 +90,32 @@ return {
             ["@number"] = { fg = colors.peach, style = {} },
             Boolean = { fg = colors.peach, style = {} },
             ["@boolean"] = { fg = colors.peach, style = {} },
-            
+
             -- Operators and punctuation
             Operator = { fg = colors.sky, style = {} },
             ["@operator"] = { fg = colors.sky, style = {} },
             ["@punctuation.delimiter"] = { fg = colors.overlay2, style = {} },
             ["@punctuation.bracket"] = { fg = colors.overlay2, style = {} },
-            
+
             -- Better cursor and selection
             CursorLine = { bg = colors.surface0 },
             CursorLineNr = { fg = colors.lavender, style = { "bold" } },
             LineNr = { fg = colors.surface1 },
             Visual = { bg = colors.surface1 },
-            
+
             -- Search highlighting
             Search = { bg = colors.surface1, fg = colors.pink },
             IncSearch = { bg = colors.pink, fg = colors.base },
-            
+
             -- Matching brackets
             MatchParen = { fg = colors.peach, style = { "bold" } },
-            
+
             -- Diagnostics
             DiagnosticError = { fg = colors.red },
             DiagnosticWarn = { fg = colors.yellow },
             DiagnosticInfo = { fg = colors.sky },
             DiagnosticHint = { fg = colors.teal },
-            
+
             -- Better popup menu
             Pmenu = { bg = colors.surface0, fg = colors.overlay2 },
             PmenuSel = { bg = colors.surface1, fg = colors.text },
@@ -154,8 +153,7 @@ return {
           },
         },
       })
-      
-      -- Set the colorscheme
+
       vim.cmd.colorscheme("catppuccin-mocha")
     end,
   },

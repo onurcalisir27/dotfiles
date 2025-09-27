@@ -98,10 +98,8 @@ return {
       },
     })
 
-    -- Load extensions
     telescope.load_extension("fzf")
 
-    -- Essential keymaps (add these to telescope config, not separate keymap file)
     local builtin = require("telescope.builtin")
     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
     vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
@@ -119,7 +117,6 @@ return {
     vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Git Commits" })
     vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Git Files" })
 
-    -- Quick access to config files
     vim.keymap.set("n", "<leader>fn", function()
       builtin.find_files({ cwd = vim.fn.stdpath("config") })
     end, { desc = "Find Neovim Config Files" })

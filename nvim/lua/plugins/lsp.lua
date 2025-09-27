@@ -59,7 +59,6 @@ return {
             },
             root_dir = function(fname)
               local util = require("lspconfig.util")
-              -- More specific root detection for ROS2
               return util.root_pattern(
                 "compile_commands.json",
                 "package.xml",
@@ -80,20 +79,20 @@ return {
               map("n", "gy", vim.lsp.buf.type_definition, "Go to Type Definition")
               map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
 
-              map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+              map("n", "c_K", vim.lsp.buf.hover, "Hover Documentation")
               map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
               map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
-              map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Actions")
-              map("n", "<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
-              map("n", "<leader>f", function()
+              map("n", "<leader>la", vim.lsp.buf.code_action, "Code Actions")
+              map("n", "<leader>ln", vim.lsp.buf.rename, "Rename Symbol")
+              map("n", "<leader>lf", function()
                 vim.lsp.buf.format({ async = true })
               end, "Format Document")
 
-              map("n", "[d", vim.diagnostic.goto_prev, "Previous Diagnostic")
-              map("n", "]d", vim.diagnostic.goto_next, "Next Diagnostic")
-              map("n", "<leader>e", vim.diagnostic.open_float, "Show Line Diagnostics")
-              map("n", "<leader>q", vim.diagnostic.setloclist, "Open Diagnostic List")
+              map("n", "[n", vim.diagnostic.goto_prev, "Previous Diagnostic")
+              map("n", "]n", vim.diagnostic.goto_next, "Next Diagnostic")
+              map("n", "<leader>ld", vim.diagnostic.open_float, "Show Line Diagnostics")
+              map("n", "<leader>ll", vim.diagnostic.setloclist, "Open Diagnostic List")
 
               -- Inlay hints
               if client.server_capabilities.inlayHintProvider then

@@ -42,9 +42,9 @@ return {
       require("nvim-autopairs").setup({
         check_ts = true, -- Use treesitter
         ts_config = {
-          lua = {'string'},-- Don't add pairs in lua string treesitter nodes
+          lua = {'string'},
           javascript = {'template_string'},
-          java = false,-- Don't check treesitter on java
+          java = false,
         }
       })
     end,

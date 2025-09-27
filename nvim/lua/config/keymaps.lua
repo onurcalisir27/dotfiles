@@ -49,8 +49,8 @@ vim.keymap.set("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" }
 -- In visual mode: <leader>c comments selection
 
 -- Better file navigation
-vim.keymap.set("n", "<leader>pf", "<cmd>find<CR>", { desc = "Find files" })
-vim.keymap.set("n", "<leader>ph", "<cmd>find %:h/*<CR>", { desc = "Find files in current directory" })
+vim.keymap.set("n", "<leader>ee", "<cmd>find<CR>", { desc = "Find files" })
+vim.keymap.set("n", "<leader>er", "<cmd>find %:h/*<CR>", { desc = "Find files in current directory" })
 
 -- Check LSP
 vim.keymap.set("n", "<leader>li", "<cmd>LspInfo<CR>", { desc = "LSP Info" })

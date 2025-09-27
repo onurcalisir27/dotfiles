@@ -6,7 +6,7 @@ return {
   config = function()
     -- Get catppuccin colors
     local colors = require("catppuccin.palettes").get_palette("mocha")
-    
+
     -- Custom theme based on catppuccin
     local catppuccin_theme = {
       normal = {
@@ -41,21 +41,22 @@ return {
     local function location()
       return "%l:%c"
     end
-    
+
     local function progress()
       return "%p%%/%L"
     end
 
-    local function lsp_client()
-      local clients = vim.lsp.get_active_clients({ bufnr = 0 })
-      if #clients == 0 then
+    local function lsp_clients()
+      local buf_clients = vim.lsp.get_clients({ bufnr = 0 }) -- Modern API
+      if #buf_clients == 0 then
         return "No LSP"
       end
-      local names = {}
-      for _, client in ipairs(clients) do
-        table.insert(names, client.name)
+
+      local client_names = {}
+      for _, client in pairs(buf_clients) do
+        table.insert(client_names, client.name)
       end
-      return table.concat(names, ", ")
+      return table.concat(client_names, ", ")
     end
 
     require("lualine").setup({
@@ -78,7 +79,7 @@ return {
       },
       sections = {
         -- Left side
-        lualine_a = { 
+        lualine_a = {
           {
             "mode",
             fmt = function(str)
@@ -116,9 +117,9 @@ return {
         lualine_c = {
           {
             "filename",
-            file_status = true, -- Shows file modification status
+            file_status = false, -- Shows file modification status
             newfile_status = false,
-            path = 1, -- 0: Just the filename, 1: Relative path, 2: Absolute path
+            path = 0, -- 0: Just the filename, 1: Relative path, 2: Absolute path
             shorting_target = 40,
             symbols = {
               modified = " ●",
@@ -129,7 +130,7 @@ return {
             color = { fg = colors.text },
           },
         },
-        
+
         -- Right side
         lualine_x = {
           {
@@ -148,7 +149,7 @@ return {
             always_visible = false,
           },
           {
-            lsp_client,
+            lsp_clients,
             icon = " ",
             color = { fg = colors.text },
           },
@@ -194,14 +195,13 @@ return {
         lualine_y = {},
         lualine_z = {},
       },
-      tabline = {}, -- Disable tabline (use bufferline if needed)
-      winbar = {}, -- Disable winbar
+      tabline = {},
+      winbar = {},
       extensions = {
         "nvim-tree",
         "oil",
         "lazy",
         "mason",
-        "telescope",
       },
     })
   end,

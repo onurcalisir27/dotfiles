@@ -16,25 +16,25 @@ return {
       hijack_unnamed_buffer_when_opening = false,
       sync_root_with_cwd = true,
       respect_buf_cwd = true,
-      
+
       -- Update focused file
       update_focused_file = {
         enable = true,
         update_root = true,
         ignore_list = {},
       },
-      
+
       -- System open settings
       system_open = {
         cmd = nil,
         args = {},
       },
-      
+
       -- Diagnostics integration
       diagnostics = {
         enable = false, -- Disabled to avoid sign conflicts
       },
-      
+
       -- View settings
       view = {
         width = 35,
@@ -56,7 +56,7 @@ return {
           },
         },
       },
-      
+
       -- Renderer settings (appearance)
       renderer = {
         add_trailing = false,
@@ -120,13 +120,13 @@ return {
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
         symlink_destination = true,
       },
-      
+
       -- Hijack directories
       hijack_directories = {
         enable = true,
         auto_open = true,
       },
-      
+
       -- Git integration
       git = {
         enable = true,
@@ -135,21 +135,21 @@ return {
         show_on_open_dirs = true,
         timeout = 400,
       },
-      
+
       -- Modified files
       modified = {
         enable = true,
         show_on_dirs = true,
         show_on_open_dirs = true,
       },
-      
+
       -- Filesystem watchers
       filesystem_watchers = {
         enable = true,
         debounce_delay = 50,
         ignore_dirs = {},
       },
-      
+
       -- Actions
       actions = {
         use_system_clipboard = true,
@@ -188,19 +188,19 @@ return {
           close_window = true,
         },
       },
-      
+
       -- Trash settings
       trash = {
         cmd = "gio trash",
         require_confirm = true,
       },
-      
+
       -- Live filter
       live_filter = {
         prefix = "[FILTER]: ",
         always_show_folders = true,
       },
-      
+
       -- Tab settings
       tab = {
         sync = {
@@ -209,12 +209,12 @@ return {
           ignore = {},
         },
       },
-      
+
       -- Notify settings
       notify = {
         threshold = vim.log.levels.INFO,
       },
-      
+
       -- Log settings
       log = {
         enable = false,
@@ -238,16 +238,16 @@ return {
 
     -- Toggle nvim-tree
     keymap("n", "<leader>t", "<cmd>NvimTreeToggle<CR>", vim.tbl_extend("force", opts, { desc = "Toggle file tree" }))
-    
+
     -- Focus nvim-tree
     keymap("n", "<leader>tf", "<cmd>NvimTreeFocus<CR>", vim.tbl_extend("force", opts, { desc = "Focus file tree" }))
-    
+
     -- Find current file in tree
-    keymap("n", "<leader>ff", "<cmd>NvimTreeFindFile<CR>", vim.tbl_extend("force", opts, { desc = "Find current file in tree" }))
-    
+    keymap("n", "<leader>tn", "<cmd>NvimTreeFindFile<CR>", vim.tbl_extend("force", opts, { desc = "Find current file in tree" }))
+
     -- Collapse all folders
     keymap("n", "<leader>tc", "<cmd>NvimTreeCollapse<CR>", vim.tbl_extend("force", opts, { desc = "Collapse all folders" }))
-    
+
     -- Refresh tree
     keymap("n", "<leader>tr", "<cmd>NvimTreeRefresh<CR>", vim.tbl_extend("force", opts, { desc = "Refresh file tree" }))
 

@@ -30,5 +30,15 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   end,
 })
 
+-- Auto-save after 10 minutes of inactivity
+vim.api.nvim_create_autocmd("TermOpen", {
+  desc = "Custom Built-in Terminal Settings",
+  group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+  end,
+})
+
 -- Set updatetime for auto-save (10 minutes = 600000ms)
 vim.opt.updatetime = 600000

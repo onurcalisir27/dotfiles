@@ -19,6 +19,7 @@ return {
 
         -- Better search behavior
         file_ignore_patterns = {
+          "docs/",
           ".git/",
           "node_modules/",
           "build/",

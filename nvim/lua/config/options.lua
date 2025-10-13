@@ -2,7 +2,7 @@
 
 -- Leader key
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = "\\"
 
 -- Basic editor settings
 vim.opt.number = true
@@ -39,10 +39,10 @@ vim.opt.pumblend = 10 -- Popup menu transparency
 vim.opt.winblend = 0 -- Window transparency
 
 -- Better cursor visibility
-vim.opt.cursorcolumn = false -- Don't highlight cursor column (can be distracting)
+vim.opt.cursorcolumn = false
 
 -- Better visual indicators
-vim.opt.list = true -- Show invisible characters
+vim.opt.list = true
 vim.opt.listchars = {
   tab = "→ ",
   trail = "·",

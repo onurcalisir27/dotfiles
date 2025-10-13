@@ -5,18 +5,16 @@ return {
     -- Snippet engine
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
-
     -- Completion sources
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
-
     -- Snippet collection
     "rafamadriz/friendly-snippets",
-
     -- Better icons
     "onsails/lspkind.nvim",
+
   },
   config = function()
     local cmp = require("cmp")

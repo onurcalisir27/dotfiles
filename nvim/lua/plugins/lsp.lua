@@ -27,7 +27,7 @@ return {
 
     -- Setup mason-lspconfig FIRST, but with handlers
     require("mason-lspconfig").setup({
-      ensure_installed = { "clangd", "pylsp", "cmake", "lua_ls" },
+      ensure_installed = { "clangd", "pylsp", "cmake", "lua_ls", "texlab"},
       automatic_installation = true,
       -- Use handlers to properly configure each server
       handlers = {
@@ -42,7 +42,8 @@ return {
           lspconfig.clangd.setup({
             cmd = {
               -- Use Mason's clangd explicitly
-              vim.fn.stdpath("data") .. "/mason/bin/clangd",
+              --vim.fn.stdpath("data") .. "/mason/bin/clangd",
+              "clangd",
               "--background-index",
               "--suggest-missing-includes",
               "--clang-tidy",
@@ -79,7 +80,7 @@ return {
               map("n", "gy", vim.lsp.buf.type_definition, "Go to Type Definition")
               map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
 
-              map("n", "c_K", vim.lsp.buf.hover, "Hover Documentation")
+              map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
               map("n", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
               map("i", "<C-k>", vim.lsp.buf.signature_help, "Signature Help")
 
@@ -155,6 +156,47 @@ return {
             },
             on_attach = function(client, bufnr)
               print("lua_ls attached to buffer " .. bufnr)
+            end,
+            capabilities = vim.lsp.protocol.make_client_capabilities(),
+          })
+        end,
+
+        ["texlab"] = function()
+          require("lspconfig").texlab.setup({
+            settings = {
+              texlab = {
+                build = {
+                  executable = "latexmk",
+                  args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                  onSave = true,
+                  forwardSearchAfter = false,
+                },
+                forwardSearch = {
+                  executable = "zathura",
+                  args = { "--synctex-forward", "%l:1:%f", "%p" },
+                },
+                chktex = {
+                  onOpenAndSave = false,  -- Disable style warnings
+                  onEdit = false,
+                },
+              }
+            },
+            on_attach = function(client, bufnr)
+              print("texlab attached to buffer " .. bufnr)
+
+              local map = function(mode, lhs, rhs, desc)
+                vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+              end
+
+              -- LSP keymaps (reuse your existing ones)
+              map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+              map("n", "gr", vim.lsp.buf.references, "Go to References")
+              map("n", "K", vim.lsp.buf.hover, "Hover Documentation")
+              map("n", "<leader>la", vim.lsp.buf.code_action, "Code Actions")
+              map("n", "<leader>ln", vim.lsp.buf.rename, "Rename Symbol")
+              map("n", "<leader>lf", function()
+                vim.lsp.buf.format({ async = true })
+              end, "Format Document")
             end,
             capabilities = vim.lsp.protocol.make_client_capabilities(),
           })

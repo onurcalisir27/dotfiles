@@ -2,6 +2,9 @@ return {
   -- Better file explorer
   {
     "stevearc/oil.nvim",
+    -- dependencies = {
+    --   "nvim-tree/nvim-web-icons"
+    -- },
     config = function()
       require("oil").setup({
         default_file_explorer = true,
@@ -11,6 +14,8 @@ return {
           "size",
           -- "mtime",
         },
+        skip_confirm_for_simple_edits = true,
+        prompt_save_on_select_new_entry = true,
         keymaps = {
           ["g?"] = "actions.show_help",
           ["<CR>"] = "actions.select",

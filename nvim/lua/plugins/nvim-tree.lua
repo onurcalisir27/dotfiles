@@ -237,7 +237,7 @@ return {
     local opts = { silent = true, noremap = true }
 
     -- Toggle nvim-tree
-    keymap("n", "<leader>t", "<cmd>NvimTreeToggle<CR>", vim.tbl_extend("force", opts, { desc = "Toggle file tree" }))
+    keymap("n", "<leader>tt", "<cmd>NvimTreeToggle<CR>", vim.tbl_extend("force", opts, { desc = "Toggle file tree" }))
 
     -- Focus nvim-tree
     keymap("n", "<leader>tf", "<cmd>NvimTreeFocus<CR>", vim.tbl_extend("force", opts, { desc = "Focus file tree" }))

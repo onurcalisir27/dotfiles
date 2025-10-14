@@ -89,7 +89,7 @@ vim.keymap.set("n", "<localleader>ld", function()
   vim.cmd.wincmd("J")
   vim.api.nvim_win_set_height(0,5)
   job_id = vim.bo.channel
-  vim.fn.chansend(job_id, {"cd ~/Project/Masters-Thesis/latex && rm *.aux *.bbl *.bcf *.blg *.log *.out *.toc\r\n"})
+  vim.fn.chansend(job_id, {"cd ~/Projects/Masters-Thesis/latex && rm *.aux *.bbl *.bcf *.blg *.log *.out *.toc\r\n"})
 end
   , { desc = "Used to clear cache on Latex Project"}
 )

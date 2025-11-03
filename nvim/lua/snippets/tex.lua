@@ -58,4 +58,6 @@ return {
   s({ trig = "int", snippetType = "autosnippet" }, {
     t("\\int_{"), i(1, "a"), t("}^{"), i(2, "b"), t("} "), i(0)
   }),
+
+  -- s({ trig="bmat", snippetType = })
 }

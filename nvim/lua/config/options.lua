@@ -26,7 +26,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.signcolumn = "yes"
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.cursorline = true
 
 -- Better syntax highlighting settings

@@ -22,7 +22,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- Quick save
 vim.keymap.set("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-vim.keymap.set("i", "<C-s>", "<Esc><cmd>w<CR>a", { desc = "Save file from insert mode" })
+vim.keymap.set("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file from insert mode" })
 
 -- Quick close
 vim.keymap.set("n", "<C-q>", "<cmd>q<CR>", { desc = "Quit nvim in normal mode"})
@@ -93,3 +93,7 @@ vim.keymap.set("n", "<localleader>ld", function()
 end
   , { desc = "Used to clear cache on Latex Project"}
 )
+
+vim.keymap.set("n", "<leader>ww","<C-w><C-d>", { desc = "Better keymap for floating lsp diagnostic screen" })
+
+vim.keymap.set("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true })

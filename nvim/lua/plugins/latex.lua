@@ -5,11 +5,10 @@ return {
     config = function()
       -- PDF viewer
       vim.g.vimtex_view_method = 'zathura_simple'
+      -- vim.g.vimtex_view_general_viewer = 'okular'
 
       vim.g.vimtex_compiler_method = 'latexmk'
-      -- Don't auto open quickfix on compile errors
-      vim.g.vimtex_quickfix_mode = 1
-
+      vim.g.vimtex_quickfix_mode = 0
       -- Suppress some compilation warnings
       vim.g.vimtex_quickfix_ignore_filters = {
         'Underfull',
@@ -70,9 +69,6 @@ return {
           vim.keymap.set("n", "<localleader>li", "<cmd>VimtexInfo<cr>", vim.tbl_extend("force", opts, { desc = "VimTeX Info" }))
           vim.keymap.set("n", "<localleader>ls", "<cmd>VimtexStatus<cr>", vim.tbl_extend("force", opts, { desc = "Status" }))
 
-          -- Text objects (these work with operators like d, c, v)
-          -- Example: dse = delete surrounding environment, csc = change surrounding command
-          -- These are built into VimTeX, just documenting them here
         end
       })
     end
